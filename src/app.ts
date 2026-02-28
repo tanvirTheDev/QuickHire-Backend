@@ -6,6 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import notFound from "./middlewares/notFound";
 import errorHandler from "./middlewares/errorHandler";
+import mainRouter from "./routes";
 
 const app = express();
 
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// routes will be mounted here
+app.use("/api", mainRouter);
 
 app.use(notFound);
 
