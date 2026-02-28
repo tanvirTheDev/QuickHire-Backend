@@ -1,7 +1,11 @@
+import "express-async-errors";
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import notFound from "./middlewares/notFound";
+import errorHandler from "./middlewares/errorHandler";
 
 const app = express();
 
@@ -21,8 +25,8 @@ if (process.env.NODE_ENV === "development") {
 
 // routes will be mounted here
 
-// 404 handler will go here
+app.use(notFound);
 
-// error handler will go here
+app.use(errorHandler);
 
 export default app;
