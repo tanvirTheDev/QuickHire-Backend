@@ -7,6 +7,7 @@ import {
   createJob,
   deleteJob,
   getAllJobs,
+  getFeaturedJobs,
   getJobById,
   updateJob,
 } from "./job.service";
@@ -38,6 +39,19 @@ export const getAllJobsController = catchAsync(async (req, res) => {
     message: "Jobs retrieved successfully",
     data: result.jobs,
     meta: result.meta,
+  });
+});
+
+export const getFeaturedJobsController = catchAsync(async (req, res) => {
+  const rawLimit = typeof req.query.limit === "string" ? req.query.limit : "8";
+  const limit = Number.parseInt(rawLimit, 10);
+  const jobs = await getFeaturedJobs(limit);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Featured jobs retrieved successfully",
+    data: jobs,
   });
 });
 

@@ -56,6 +56,16 @@ export const getAllJobs = async (query: IJobQuery) => {
   };
 };
 
+export const getFeaturedJobs = async (limit = 8) => {
+  const safeLimit = Number.isFinite(limit) && limit > 0 ? Math.min(limit, 20) : 8;
+  const jobs = await Job.find({ isActive: true })
+    .sort({ createdAt: -1 })
+    .limit(safeLimit)
+    .lean();
+
+  return jobs;
+};
+
 export const getJobById = async (id: string) => {
   validateObjectId(id);
 
